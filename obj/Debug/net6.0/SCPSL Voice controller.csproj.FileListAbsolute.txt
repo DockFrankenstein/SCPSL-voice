@@ -1,0 +1,28 @@
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\SCPSL Voice controller.exe
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\SCPSL Voice controller.deps.json
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\SCPSL Voice controller.runtimeconfig.json
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\SCPSL Voice controller.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\ref\SCPSL Voice controller.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\SCPSL Voice controller.pdb
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\WindowsInput.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\obj\Debug\net6.0\SCPSL Voice controller.csproj.AssemblyReference.cache
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\obj\Debug\net6.0\SCPSL Voice controller.GeneratedMSBuildEditorConfig.editorconfig
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\obj\Debug\net6.0\SCPSL Voice controller.AssemblyInfoInputs.cache
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\obj\Debug\net6.0\SCPSL Voice controller.AssemblyInfo.cs
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\obj\Debug\net6.0\SCPSL Voice controller.csproj.CoreCompileInputs.cache
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\obj\Debug\net6.0\SCPSL Voice controller.csproj.CopyComplete
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\obj\Debug\net6.0\SCPSL Voice controller.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\obj\Debug\net6.0\ref\SCPSL Voice controller.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\obj\Debug\net6.0\SCPSL Voice controller.pdb
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\obj\Debug\net6.0\SCPSL Voice controller.genruntimeconfig.cache
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\System.Speech.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Speech.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\vine_thud.wav
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\System.Drawing.Common.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\System.Windows.Extensions.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\runtimes\unix\lib\net6.0\System.Drawing.Common.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+E:\VS\SCPSL Voice controller\SCPSL Voice controller\bin\Debug\net6.0\helicopter.wav
