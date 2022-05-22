@@ -12,9 +12,18 @@ namespace VoiceCommands.Commands
         public static void WalkForward(InputSimulator simulator) =>
             WalkVertical(simulator, VerticalAxis.forward);
 
+        [VoiceCommand("control z")]
+        public static void Backward(InputSimulator simulator) =>
+            WalkVertical(simulator, VerticalAxis.backward);
+
         static void WalkVertical(InputSimulator simulator, VerticalAxis axis)
         {
-            if (verticalAxis == axis) return;
+            if (verticalAxis == axis)
+            {
+                simulator.Keyboard.KeyUp(VirtualKeyCode.SHIFT);
+                simulator.Keyboard.KeyUp(VirtualKeyCode.LCONTROL);
+                return;
+            }
 
             verticalAxis = axis;
             switch (axis)
@@ -35,10 +44,6 @@ namespace VoiceCommands.Commands
                     break;
             }
         }
-
-        [VoiceCommand("control z")]
-        public static void Backward(InputSimulator simulator) =>
-            WalkVertical(simulator, VerticalAxis.backward);
 
         [VoiceCommand("skidaddle")]
         public static void Run(InputSimulator simulator)
