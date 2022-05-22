@@ -19,26 +19,9 @@ namespace VoiceCommands
 
         public static bool Pause { get; set; } = false;
 
-        //[ConsoleSystem.Initialize]
-        //public static void Initialize()
-        //{
-        //    if (Commands == null)
-        //        CreateCommandList();
-
-        //    GenerateCommandNames();
-        //    Simulator = new InputSimulator();
-
-        //    Choices commands = new Choices(CommandNames);
-
-        //    recognizer.LoadGrammar(new Grammar(new GrammarBuilder(commands)));
-
-        //    recognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(HandleRecognition);
-        //}
-
-        public static void Start()
+        [ConsoleSystem.Initialize]
+        public static void Initialize()
         {
-            Pause = false;
-
             if (Commands == null)
                 CreateCommandList();
 
@@ -50,6 +33,23 @@ namespace VoiceCommands
             recognizer.LoadGrammar(new Grammar(new GrammarBuilder(commands)));
 
             recognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(HandleRecognition);
+        }
+
+        public static void Start()
+        {
+            Pause = false;
+
+            //if (Commands == null)
+            //    CreateCommandList();
+
+            //GenerateCommandNames();
+            //Simulator = new InputSimulator();
+
+            //Choices commands = new Choices(CommandNames);
+
+            //recognizer.LoadGrammar(new Grammar(new GrammarBuilder(commands)));
+
+            //recognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(HandleRecognition);
 
             new Thread(() =>
             {
