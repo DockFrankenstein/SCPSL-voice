@@ -1,11 +1,11 @@
 ﻿using System.Speech.Recognition;
 using WindowsInput;
 using System.Reflection;
-using VoiceCommands.Commands;
+using SLVoiceController.VoiceCommands.Commands;
 
 using static ConsoleSystem.ConsoleLogger;
 
-namespace VoiceCommands
+namespace SLVoiceController.VoiceCommands
 {
     public static class VoiceCommandController
     {

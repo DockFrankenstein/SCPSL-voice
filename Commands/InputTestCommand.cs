@@ -2,7 +2,7 @@
 using WindowsInput;
 using WindowsInput.Native;
 
-namespace Commands
+namespace SLVoiceController.Commands
 {
     public class InputTestCommand : ConsoleCommand
     {

@@ -19,7 +19,11 @@ namespace ConsoleSystem
             if (string.IsNullOrEmpty(text)) return;
             DateTime time = DateTime.Now;
             ForegroundColor = color;
-            WriteLine($"[{time:yyyy/MM/dd} {time:HH/mm/ss} {time:zz}] {text}");
+
+            string timeText = $"[{time:yyyy/MM/dd} {time:HH/mm/ss} {time:zz}]";
+            string log = $"{timeText} {text.Replace("\n", $"\n{timeText} ")}";
+
+            WriteLine(log);
             ForegroundColor = DefaultColor;
         }
 

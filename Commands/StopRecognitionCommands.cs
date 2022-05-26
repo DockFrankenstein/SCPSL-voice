@@ -1,7 +1,7 @@
 ﻿using ConsoleSystem.Commands;
-using VoiceCommands;
+using SLVoiceController.VoiceCommands;
 
-namespace Commands
+namespace SLVoiceController.Commands
 {
     public class StopRecognitionCommands : ConsoleCommand
     {

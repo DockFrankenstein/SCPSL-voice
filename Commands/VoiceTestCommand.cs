@@ -1,7 +1,7 @@
 ﻿using ConsoleSystem.Commands;
 using System.Speech.Recognition;
 
-namespace Commands
+namespace SLVoiceController.Commands
 {
     public class VoiceTestCommand : ConsoleCommand
     {

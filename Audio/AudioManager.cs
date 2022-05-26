@@ -3,7 +3,7 @@ using ConsoleSystem;
 
 using static ConsoleSystem.ConsoleLogger;
 
-namespace Audio
+namespace SLVoiceController.Audio
 {
     public static class AudioManager
     {

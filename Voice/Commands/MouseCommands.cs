@@ -1,7 +1,7 @@
 ﻿using WindowsInput;
 using System.Media;
 
-namespace VoiceCommands.Commands
+namespace SLVoiceController.VoiceCommands.Commands
 {
     public static class MouseCommands
     {

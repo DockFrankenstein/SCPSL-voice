@@ -1,4 +1,4 @@
-﻿using VoiceCommands;
+﻿using SLVoiceController.VoiceCommands;
 
 namespace ConsoleSystem.Commands
 {

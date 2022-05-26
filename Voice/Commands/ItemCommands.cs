@@ -2,7 +2,7 @@
 using WindowsInput.Native;
 using System.Speech.Synthesis;
 
-namespace VoiceCommands.Commands
+namespace SLVoiceController.VoiceCommands.Commands
 {
     public static class ItemCommands
     {

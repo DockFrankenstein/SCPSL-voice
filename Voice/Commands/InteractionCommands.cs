@@ -1,7 +1,7 @@
 ﻿using WindowsInput;
 using WindowsInput.Native;
 
-namespace VoiceCommands.Commands
+namespace SLVoiceController.VoiceCommands.Commands
 {
     public static class InteractionCommands
     {
