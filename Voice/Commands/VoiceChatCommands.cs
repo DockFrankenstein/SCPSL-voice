@@ -1,5 +1,6 @@
 ﻿using WindowsInput;
 using WindowsInput.Native;
+using SLVoiceController.Config;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
@@ -10,33 +11,19 @@ namespace SLVoiceController.VoiceCommands.Commands
 
         [VoiceCommand("voice chat")]
         public static void VoiceChatCommand(InputSimulator simulator) =>
-            ToggleChat(simulator, VirtualKeyCode.VK_Q, ref _voiceActive);
+            SLKeys.current.voiceChat.ChangeKeyState(_voiceActive = !_voiceActive);
 
         [VoiceCommand("radio")]
         public static void RadioChatCommand(InputSimulator simulator) =>
-            ToggleChat(simulator, VirtualKeyCode.VK_V, ref _radioActive);
-
-        static void ToggleChat(InputSimulator simulator, VirtualKeyCode key, ref bool state)
-        {
-            state = !state;
-            switch (state)
-            {
-                case true:
-                    simulator.Keyboard.KeyDown(key);
-                    break;
-                case false:
-                    simulator.Keyboard.KeyUp(key);
-                    break;
-            }
-        }
+            SLKeys.current.altVoice.ChangeKeyState(_radioActive = !_radioActive);
 
         [VoiceStop]
         public static void HandleRecognitionStop(InputSimulator simulator)
         {
             _voiceActive = false;
             _radioActive = false;
-            simulator.Keyboard.KeyUp(VirtualKeyCode.VK_Q);
-            simulator.Keyboard.KeyUp(VirtualKeyCode.VK_V);
+            SLKeys.current.voiceChat.KeyUp();
+            SLKeys.current.altVoice.KeyUp();
         }
     }
 }

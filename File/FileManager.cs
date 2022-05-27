@@ -89,15 +89,21 @@ namespace SLVoiceController.File
         #endregion
 
         #region JSON
+        static JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
+        {
+            IncludeFields = true,
+            WriteIndented = true,
+        };
+
         public static void SaveJSON<T>(string path, T? data)
         {
-            SaveWriter(path, JsonSerializer.Serialize(data, new JsonSerializerOptions() { IncludeFields = true, WriteIndented = true }));
+            SaveWriter(path, JsonSerializer.Serialize(data, jsonSerializerOptions));
         }
 
         public static T? LoadJSON<T>(string path)
         {
             string textData = LoadWriter(path);
-            object? data = JsonSerializer.Deserialize<T>(textData);
+            object? data = JsonSerializer.Deserialize<T>(textData, jsonSerializerOptions);
             if (data == null)
                 throw new Exception($"Couldn't read JSON data from {textData}");
 

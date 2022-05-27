@@ -1,6 +1,7 @@
 ﻿using WindowsInput;
 using WindowsInput.Native;
 using System.Speech.Synthesis;
+using SLVoiceController.Config;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
@@ -12,7 +13,7 @@ namespace SLVoiceController.VoiceCommands.Commands
 
         [VoiceCommand("twitter")]
         public static void CancelUsing(InputSimulator simulator) =>
-            simulator.Mouse.RightButtonClick();
+            SLKeys.current.zoom.KeyPress();
 
 
         [VoiceCommand("begin the process of zip zaping my medical kit please")]
@@ -24,10 +25,12 @@ namespace SLVoiceController.VoiceCommands.Commands
                 new SpeechSynthesizer().SpeakAsync(new Prompt("Activating fun"));
                 while (EnableZipZap)
                 {
-                    simulator.Mouse.LeftButtonClick();
-                    Thread.Sleep(500);
-                    simulator.Mouse.RightButtonClick();
-                    Thread.Sleep(200);
+                    SLKeys.current.shoot
+                        .KeyPress()
+                        .Wait(500);
+                    SLKeys.current.zoom
+                        .KeyPress()
+                        .Wait(500);
                 }
             }).Start();
         }
@@ -46,16 +49,17 @@ namespace SLVoiceController.VoiceCommands.Commands
         {
             new Thread(() =>
             {
-                simulator.Keyboard.KeyPress(VirtualKeyCode.VK_5);
-                simulator.Mouse.MoveMouseBy(0, 1440);
+                SLKeys.current.grenadeHotkey.KeyPress();
+                simulator.Mouse.MoveMouseBy(0, 4000);
+
                 new SpeechSynthesizer().SpeakAsync(new Prompt("Commencing ultimate bye bye"));
                 Thread.Sleep(200);
-                simulator.Mouse.LeftButtonClick();
+                SLKeys.current.shoot.KeyPress();
             }).Start();
         }
 
         [VoiceCommand("throw")]
         public static void Throw(InputSimulator simulator) =>
-            simulator.Keyboard.KeyPress(VirtualKeyCode.VK_T);
+            SLKeys.current.throwItem.KeyPress();
     }
 }

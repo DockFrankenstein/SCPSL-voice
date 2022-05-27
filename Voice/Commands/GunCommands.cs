@@ -1,5 +1,6 @@
 ﻿using WindowsInput;
 using WindowsInput.Native;
+using SLVoiceController.Config;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
@@ -11,70 +12,53 @@ namespace SLVoiceController.VoiceCommands.Commands
         [VoiceCommand("bang")]
         public static void ShootOneShot(InputSimulator simulator)
         {
-            simulator.Mouse.LeftButtonUp();
-            simulator.Mouse.LeftButtonClick();
+            SLKeys.current.zoom.KeyPress();
         }
 
         [VoiceCommand("parabellum")]
         public static void ShootAutomatic(InputSimulator simulator)
         {
-            Shooting = !Shooting;
-            switch (Shooting)
-            {
-                case true:
-                    simulator.Mouse.LeftButtonDown();
-                    break;
-                case false:
-                    simulator.Mouse.LeftButtonUp();
-                    break;
-            }
+            SLKeys.current.shoot.ChangeKeyState(Shooting = !Shooting);
         }
 
         [VoiceCommand("enhance")]
         public static void Zoom(InputSimulator simulator)
         {
             Zoomed = !Zoomed;
-            switch (Zoomed)
-            {
-                case true:
-                    simulator.Mouse.RightButtonDown();
-                    break;
-                case false:
-                    simulator.Mouse.RightButtonUp();
-                    break;
-            }
+            SLKeys.current.shoot.ChangeKeyState(Zoomed = !Zoomed);
         }
 
         [VoiceStop]
         public static void OnStopRecognition(InputSimulator simulator)
         {
-            simulator.Mouse.RightButtonUp();
-            simulator.Mouse.LeftButtonUp();
+            SLKeys.current.shoot.KeyUp();
+            SLKeys.current.zoom.KeyUp();
             Shooting = false;
             Zoomed = false;
         }
 
         [VoiceCommand("flashlight")]
         public static void Flashlight(InputSimulator simulator) =>
-            simulator.Keyboard.KeyPress(VirtualKeyCode.VK_G);
+            SLKeys.current.flashlight.KeyPress();
 
         [VoiceCommand("bullet")]
         public static void Reload(InputSimulator simulator) =>
-            simulator.Keyboard.KeyPress(VirtualKeyCode.VK_R);
+            SLKeys.current.reload.KeyPress();
 
         [VoiceCommand("unload")]
         public static void Unload(InputSimulator simulator)
         {
             new Thread(() =>
             {
-                simulator.Keyboard.KeyDown(VirtualKeyCode.VK_R);
-                Thread.Sleep(2000);
-                simulator.Keyboard.KeyUp(VirtualKeyCode.VK_R);
+                SLKeys.current.reload
+                    .KeyDown()
+                    .Wait(2000)
+                    .KeyUp();
             }).Start();
         }
 
         [VoiceCommand("cock")]
         public static void CockGun(InputSimulator simulator) =>
-            simulator.Keyboard.KeyPress(VirtualKeyCode.MBUTTON);
+            SLKeys.current.cockRevolver.KeyPress();
     }
 }

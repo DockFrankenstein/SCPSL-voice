@@ -1,5 +1,6 @@
 ﻿using WindowsInput;
 using WindowsInput.Native;
+using SLVoiceController.Config;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
@@ -7,6 +8,6 @@ namespace SLVoiceController.VoiceCommands.Commands
     {
         [VoiceCommand("Jump")]
         public static void Jump(InputSimulator simulator) =>
-            simulator.Keyboard.KeyPress(VirtualKeyCode.SPACE);
+            SLKeys.current.jump.KeyPress();
     }
 }

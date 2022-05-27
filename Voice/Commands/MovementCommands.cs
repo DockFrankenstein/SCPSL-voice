@@ -1,5 +1,6 @@
 ﻿using WindowsInput;
 using WindowsInput.Native;
+using SLVoiceController.Config;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
@@ -9,19 +10,19 @@ namespace SLVoiceController.VoiceCommands.Commands
         static VerticalAxis verticalAxis;
 
         [VoiceCommand("forward")]
-        public static void WalkForward(InputSimulator simulator) =>
-            WalkVertical(simulator, VerticalAxis.forward);
+        public static void WalkForward() =>
+            WalkVertical(VerticalAxis.forward);
 
         [VoiceCommand("control z")]
-        public static void Backward(InputSimulator simulator) =>
-            WalkVertical(simulator, VerticalAxis.backward);
+        public static void Backward() =>
+            WalkVertical(VerticalAxis.backward);
 
-        static void WalkVertical(InputSimulator simulator, VerticalAxis axis)
+        static void WalkVertical(VerticalAxis axis)
         {
             if (verticalAxis == axis)
             {
-                simulator.Keyboard.KeyUp(VirtualKeyCode.SHIFT);
-                simulator.Keyboard.KeyUp(VirtualKeyCode.LCONTROL);
+                SLKeys.current.run.KeyUp();
+                SLKeys.current.sneak.KeyUp();
                 return;
             }
 
@@ -29,18 +30,18 @@ namespace SLVoiceController.VoiceCommands.Commands
             switch (axis)
             {
                 case VerticalAxis.none:
-                    simulator.Keyboard.KeyUp(VirtualKeyCode.VK_W);
-                    simulator.Keyboard.KeyUp(VirtualKeyCode.VK_S);
-                    simulator.Keyboard.KeyUp(VirtualKeyCode.SHIFT);
-                    simulator.Keyboard.KeyUp(VirtualKeyCode.LCONTROL);
+                    SLKeys.current.forward.KeyUp();
+                    SLKeys.current.backward.KeyUp();
+                    SLKeys.current.run.KeyUp();
+                    SLKeys.current.sneak.KeyUp();
                     break;
                 case VerticalAxis.forward:
-                    simulator.Keyboard.KeyUp(VirtualKeyCode.VK_S);
-                    simulator.Keyboard.KeyDown(VirtualKeyCode.VK_W);
+                    SLKeys.current.forward.KeyDown();
+                    SLKeys.current.backward.KeyUp();
                     break;
                 case VerticalAxis.backward:
-                    simulator.Keyboard.KeyUp(VirtualKeyCode.VK_W);
-                    simulator.Keyboard.KeyDown(VirtualKeyCode.VK_S);
+                    SLKeys.current.forward.KeyUp();
+                    SLKeys.current.backward.KeyDown();
                     break;
             }
         }
@@ -48,18 +49,16 @@ namespace SLVoiceController.VoiceCommands.Commands
         [VoiceCommand("skidaddle")]
         public static void Run(InputSimulator simulator)
         {
-            simulator.Keyboard.KeyUp(VirtualKeyCode.LCONTROL);
-            simulator.ToggleKey(VirtualKeyCode.SHIFT);
-            ForceMovement(simulator);
+            SLKeys.current.sneak.KeyUp();
+            SLKeys.current.run.ToggleKey();
+            ForceMovement();
         }
 
         [VoiceStop]
         [VoiceCommand("stop")]
         public static void Stop(InputSimulator simulator)
         {
-            WalkVertical(simulator, VerticalAxis.none);
-            simulator.Keyboard.KeyUp(VirtualKeyCode.SHIFT);
-            simulator.Keyboard.KeyUp(VirtualKeyCode.LCONTROL);
+            WalkVertical(VerticalAxis.none);
         }
 
         [VoiceCommand("crouch")]
@@ -67,17 +66,17 @@ namespace SLVoiceController.VoiceCommands.Commands
         {
             new Thread(() =>
             {
-                simulator.Keyboard.KeyUp(VirtualKeyCode.SHIFT);
-                simulator.ToggleKey(VirtualKeyCode.LCONTROL);
+                SLKeys.current.run.KeyUp();
+                SLKeys.current.sneak.ToggleKey();
                 Thread.Sleep(50);
-                ForceMovement(simulator);
+                ForceMovement();
             }).Start();
         }
 
-        static void ForceMovement(InputSimulator simulator)
+        static void ForceMovement()
         {
             if (verticalAxis == VerticalAxis.none)
-                WalkVertical(simulator, VerticalAxis.forward);
+                WalkVertical(VerticalAxis.forward);
         }
     }
 }

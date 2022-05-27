@@ -2,6 +2,7 @@
 using WindowsInput;
 using System.Reflection;
 using SLVoiceController.VoiceCommands.Commands;
+using ConsoleSystem.Logic;
 
 using static ConsoleSystem.ConsoleLogger;
 
@@ -39,18 +40,6 @@ namespace SLVoiceController.VoiceCommands
         {
             Pause = false;
 
-            //if (Commands == null)
-            //    CreateCommandList();
-
-            //GenerateCommandNames();
-            //Simulator = new InputSimulator();
-
-            //Choices commands = new Choices(CommandNames);
-
-            //recognizer.LoadGrammar(new Grammar(new GrammarBuilder(commands)));
-
-            //recognizer.SpeechRecognized += new EventHandler<SpeechRecognizedEventArgs>(HandleRecognition);
-
             new Thread(() =>
             {
                 recognizer.SetInputToDefaultAudioDevice();
@@ -67,7 +56,7 @@ namespace SLVoiceController.VoiceCommands
 
             for (int i = 0; i < StopMethods.Count; i++)
             {
-                if (!CommandHasCorrectParameters(StopMethods[i], new Type[] { typeof(InputSimulator) })) continue;
+                if (!CommandHasCorrectParameters(StopMethods[i], new Type[0], new Type[] { typeof(InputSimulator) })) continue;
                 StopMethods[i].Invoke(null, new object[] { Simulator });
             }
 
@@ -79,22 +68,14 @@ namespace SLVoiceController.VoiceCommands
         {
             Log("Creating command list, this could take some time...", ConsoleColor.DarkYellow);
 
-            var attributes = GetMethodsWithAttribute<VoiceCommandAttribute>();
-            var stopAttributes = GetMethodsWithAttribute<VoiceStopAttribute>();
+            var attributes = TypeFinder.FindAttributes<VoiceCommandAttribute>();
+            var stopAttributes = TypeFinder.FindAttributes<VoiceStopAttribute>();
 
             Log("Reflections finished, creating list...", ConsoleColor.DarkYellow);
 
             Commands = attributes.ToList();
             StopMethods = stopAttributes.ToList();
         }
-
-        static IEnumerable<MethodInfo> GetMethodsWithAttribute<T>() where T : Attribute =>
-            AppDomain.CurrentDomain.GetAssemblies()
-            .SelectMany(x => x.GetTypes())
-            .Where(x => x.IsClass)
-            .SelectMany(x => x.GetMethods())
-            .Where(x => x.GetCustomAttributes(typeof(T), false)
-            .FirstOrDefault() != null);
 
         static void GenerateCommandNames()
         {
@@ -120,24 +101,33 @@ namespace SLVoiceController.VoiceCommands
             return true;
         }
 
-        static bool CommandHasCorrectParameters(MethodInfo method, Type[] args, bool log = true)
+        static bool CommandHasCorrectParameters(MethodInfo method, Type[] args, Type[] optionalArgs, bool log = true) =>
+            CommandHasCorrectParameters(method, args, optionalArgs, out _, log);
+
+        static bool CommandHasCorrectParameters(MethodInfo method, Type[] args, Type[] optionalArgs, out int parameterCount, bool log = true)
         {
             ParameterInfo[] methodArgs = method.GetParameters();
+            parameterCount = methodArgs.Length;
 
-            if (methodArgs.Length == args.Length)
+            Type[] requiredArgs = args.Concat(optionalArgs).ToArray();
+
+            if (methodArgs.Length >= args.Length)
             {
-                for (int i = 0; i < args.Length; i++)
+                for (int i = 0; i < methodArgs.Length; i++)
                 {
-                    if (args[i] != methodArgs[i].ParameterType)
-                        break;
+                    if (requiredArgs[i] == methodArgs[i].ParameterType) continue;
 
-                    if (i == args.Length - 1)
-                        return true;
+                    if (log)
+                        LogError($"Method '{method.Name}' contains invalid parameter(s)!");
+
+                    return false;
                 }
+
+                return true;
             }
 
             if (log)
-                LogError($"Method {method.Name} requires {args.Length} parameter(s)!");
+                LogError($"Method '{method.Name}' parameter count is our of range!");
 
             return false;
         }
@@ -151,9 +141,9 @@ namespace SLVoiceController.VoiceCommands
             for (int i = 0; i < CommandNames.Length; i++)
             {
                 if (args.Result.Text.ToLower() != CommandNames[i].ToLower()) continue;
-                if (!CommandHasCorrectParameters(Commands[i], new Type[] { typeof(InputSimulator) } )) continue;
+                if (!CommandHasCorrectParameters(Commands[i], new Type[0], new Type[] { typeof(InputSimulator) }, out int count)) continue;
 
-                Commands[i].Invoke(null, new object[] { Simulator });
+                Commands[i].Invoke(null, count == 0 ? new object[0] : new object[] { Simulator });
             }
         }
 
