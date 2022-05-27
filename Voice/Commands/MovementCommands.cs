@@ -1,6 +1,4 @@
-﻿using WindowsInput;
-using WindowsInput.Native;
-using SLVoiceController.Config;
+﻿using SLVoiceController.Config;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
@@ -9,11 +7,11 @@ namespace SLVoiceController.VoiceCommands.Commands
         enum VerticalAxis { none, forward, backward }
         static VerticalAxis verticalAxis;
 
-        [VoiceCommand("forward")]
+        [VoiceCommand("movement_forward", "forward")]
         public static void WalkForward() =>
             WalkVertical(VerticalAxis.forward);
 
-        [VoiceCommand("control z")]
+        [VoiceCommand("movement_backward", "backward")]
         public static void Backward() =>
             WalkVertical(VerticalAxis.backward);
 
@@ -46,8 +44,8 @@ namespace SLVoiceController.VoiceCommands.Commands
             }
         }
 
-        [VoiceCommand("skidaddle")]
-        public static void Run(InputSimulator simulator)
+        [VoiceCommand("movement_run", "sprint")]
+        public static void Run()
         {
             SLKeys.current.sneak.KeyUp();
             SLKeys.current.run.ToggleKey();
@@ -55,14 +53,14 @@ namespace SLVoiceController.VoiceCommands.Commands
         }
 
         [VoiceStop]
-        [VoiceCommand("stop")]
-        public static void Stop(InputSimulator simulator)
+        [VoiceCommand("movement_stop", "stop")]
+        public static void Stop()
         {
             WalkVertical(VerticalAxis.none);
         }
 
-        [VoiceCommand("crouch")]
-        public static void Crouch(InputSimulator simulator)
+        [VoiceCommand("movement_sneak", "sneak")]
+        public static void Crouch()
         {
             new Thread(() =>
             {

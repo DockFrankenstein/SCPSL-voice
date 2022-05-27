@@ -3,6 +3,7 @@ using WindowsInput;
 using System.Reflection;
 using SLVoiceController.VoiceCommands.Commands;
 using ConsoleSystem.Logic;
+using SLVoiceController.Config;
 
 using static ConsoleSystem.ConsoleLogger;
 
@@ -13,10 +14,11 @@ namespace SLVoiceController.VoiceCommands
         static SpeechRecognitionEngine recognizer = new SpeechRecognitionEngine();
 
         public static InputSimulator Simulator { get; private set; } = new InputSimulator();
+        public static string[] CommandKeys { get; private set; } = new string[0];
         public static string[] CommandNames { get; private set; } = new string[0];
 
-        private static List<MethodInfo>? Commands { get; set; }
-        private static List<MethodInfo>? StopMethods { get; set; }
+        public static List<MethodInfo>? Commands { get; private set; }
+        public static List<MethodInfo>? StopMethods { get; private set; }
 
         public static bool Pause { get; set; } = false;
 
@@ -26,10 +28,12 @@ namespace SLVoiceController.VoiceCommands
             if (Commands == null)
                 CreateCommandList();
 
+            VoiceSerializer.SetupVoiceConfig();
+
             GenerateCommandNames();
             Simulator = new InputSimulator();
 
-            Choices commands = new Choices(CommandNames);
+            Choices commands = new Choices(CommandNames.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray());
 
             recognizer.LoadGrammar(new Grammar(new GrammarBuilder(commands)));
 
@@ -52,12 +56,11 @@ namespace SLVoiceController.VoiceCommands
         public static void Stop()
         {
             recognizer.RecognizeAsyncStop();
-            recognizer.SpeechRecognized -= new EventHandler<SpeechRecognizedEventArgs>(HandleRecognition);
 
             for (int i = 0; i < StopMethods.Count; i++)
             {
-                if (!CommandHasCorrectParameters(StopMethods[i], new Type[0], new Type[] { typeof(InputSimulator) })) continue;
-                StopMethods[i].Invoke(null, new object[] { Simulator });
+                if (!CommandHasCorrectParameters(StopMethods[i], new Type[0], new Type[] { typeof(InputSimulator) }, out int parameterCount)) continue;
+                StopMethods[i].Invoke(null, parameterCount == 0 ? new object[0] : new object[] { Simulator });
             }
 
             Pause = false;
@@ -83,14 +86,17 @@ namespace SLVoiceController.VoiceCommands
                 return;
 
             CommandNames = new string[Commands.Count];
+            CommandKeys = new string[Commands.Count];
             for (int i = 0; i < Commands.Count; i++)
             {
                 if (!TryGetAttribute(Commands[i], out VoiceCommandAttribute? attribute)) continue;
-                CommandNames[i] = attribute.CommandName;
+                VoiceConfig.CommandData data = VoiceConfig.current.GetItem(attribute.Key, attribute.DefaultCommand);
+                CommandKeys[i] = data.key;
+                CommandNames[i] = data.command;
             }
         }
 
-        static bool TryGetAttribute(MethodInfo method, out VoiceCommandAttribute? attribute)
+        internal static bool TryGetAttribute(MethodInfo method, out VoiceCommandAttribute? attribute)
         {
             attribute = null;
 
@@ -136,19 +142,27 @@ namespace SLVoiceController.VoiceCommands
         {
             if (Pause) return;
 
-            Log($"[Voice command] Recognized command: {args.Result.Text}", ConsoleColor.DarkGreen);
+            VoiceConfig.CommandData[] commandData = VoiceConfig.current.GetItemsFromCommand(args.Result.Text);
+            foreach (var command in commandData)
+            {
+                Log($"[Voice command] Recognized command '{command.key}': {command.command}", ConsoleColor.DarkGreen);
+                ExecuteCommand(command);
+            }
+        }
 
+        static void ExecuteCommand(VoiceConfig.CommandData command)
+        {
             for (int i = 0; i < CommandNames.Length; i++)
             {
-                if (args.Result.Text.ToLower() != CommandNames[i].ToLower()) continue;
+                if (CommandKeys[i] != command.key) continue;
                 if (!CommandHasCorrectParameters(Commands[i], new Type[0], new Type[] { typeof(InputSimulator) }, out int count)) continue;
 
                 Commands[i].Invoke(null, count == 0 ? new object[0] : new object[] { Simulator });
             }
         }
 
-        [VoiceCommand("shutdown speech recognition")]
-        public static void StopCommand(InputSimulator simulator)
+        [VoiceCommand("util_shutdown", "shutdown speech recognition")]
+        public static void StopCommand()
         {
             Stop();
         }

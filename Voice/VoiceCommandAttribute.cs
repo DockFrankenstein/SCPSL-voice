@@ -3,21 +3,23 @@
     [AttributeUsage(AttributeTargets.Method)]
     public class VoiceCommandAttribute : Attribute
     {
-        string commandName = "";
-        string group = "";
+        string key = string.Empty;
+        string defaultCommand = string.Empty;
+        public string group = string.Empty;
 
-        public string CommandName => commandName;
+        public string Key => key;
+        public string DefaultCommand => defaultCommand;
         public string Group => group;
 
-        public VoiceCommandAttribute(string commandName)
+        public VoiceCommandAttribute(string key)
         {
-            this.commandName = commandName;
+            this.key = key;
         }
 
-        public VoiceCommandAttribute(string commandName, string group)
+        public VoiceCommandAttribute(string key, string defaultCommand)
         {
-            this.commandName = commandName;
-            this.group = group;
+            this.key = key;
+            this.defaultCommand = defaultCommand;
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using WindowsInput;
-using WindowsInput.Native;
-using SLVoiceController.Config;
+﻿using SLVoiceController.Config;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
@@ -9,27 +7,27 @@ namespace SLVoiceController.VoiceCommands.Commands
         public static bool Shooting { get; set; }
         public static bool Zoomed { get; set; }
 
-        [VoiceCommand("bang")]
-        public static void ShootOneShot(InputSimulator simulator)
+        [VoiceCommand("gun_shoot", "bang")]
+        public static void ShootOneShot()
         {
             SLKeys.current.zoom.KeyPress();
         }
 
-        [VoiceCommand("parabellum")]
-        public static void ShootAutomatic(InputSimulator simulator)
+        [VoiceCommand("gun_shootall", "shoot auto")]
+        public static void ShootAutomatic()
         {
             SLKeys.current.shoot.ChangeKeyState(Shooting = !Shooting);
         }
 
-        [VoiceCommand("enhance")]
-        public static void Zoom(InputSimulator simulator)
+        [VoiceCommand("gun_zoom", "zoom")]
+        public static void Zoom()
         {
             Zoomed = !Zoomed;
             SLKeys.current.shoot.ChangeKeyState(Zoomed = !Zoomed);
         }
 
         [VoiceStop]
-        public static void OnStopRecognition(InputSimulator simulator)
+        public static void OnStopRecognition()
         {
             SLKeys.current.shoot.KeyUp();
             SLKeys.current.zoom.KeyUp();
@@ -37,16 +35,16 @@ namespace SLVoiceController.VoiceCommands.Commands
             Zoomed = false;
         }
 
-        [VoiceCommand("flashlight")]
-        public static void Flashlight(InputSimulator simulator) =>
+        [VoiceCommand("gun_flashlight", "flashlight")]
+        public static void Flashlight() =>
             SLKeys.current.flashlight.KeyPress();
 
-        [VoiceCommand("bullet")]
-        public static void Reload(InputSimulator simulator) =>
+        [VoiceCommand("gun_reload", "reload")]
+        public static void Reload() =>
             SLKeys.current.reload.KeyPress();
 
-        [VoiceCommand("unload")]
-        public static void Unload(InputSimulator simulator)
+        [VoiceCommand("gun_unload", "unload")]
+        public static void Unload()
         {
             new Thread(() =>
             {
@@ -57,8 +55,8 @@ namespace SLVoiceController.VoiceCommands.Commands
             }).Start();
         }
 
-        [VoiceCommand("cock")]
-        public static void CockGun(InputSimulator simulator) =>
+        [VoiceCommand("gun_cock", "cock")]
+        public static void CockGun() =>
             SLKeys.current.cockRevolver.KeyPress();
     }
 }

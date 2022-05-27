@@ -30,8 +30,8 @@ namespace SLVoiceController.VoiceCommands.Commands
         //    StartRotating(simulator, 1, 0);
 
         [VoiceStop]
-        [VoiceCommand("stop looking")]
-        public static void StopRotation(InputSimulator simulator)
+        [VoiceCommand("mouse_stop", "stop looking")]
+        public static void StopRotation()
         {
             allowRotating = false;
         }
@@ -53,7 +53,7 @@ namespace SLVoiceController.VoiceCommands.Commands
         //public static void SmallLeft(InputSimulator simulator) =>
         //    simulator.Mouse.MoveMouseBy(SmallMoveAmmount, 0);
 
-        [VoiceCommand("helicopter")]
+        [VoiceCommand("mouse_helicopter", "helicopter")]
         public static void Helicopter(InputSimulator simulator) =>
             StartRotating(simulator, 30, 0);
 

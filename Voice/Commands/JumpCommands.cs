@@ -1,13 +1,11 @@
-﻿using WindowsInput;
-using WindowsInput.Native;
-using SLVoiceController.Config;
+﻿using SLVoiceController.Config;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
     public static class JumpCommands
     {
-        [VoiceCommand("Jump")]
-        public static void Jump(InputSimulator simulator) =>
+        [VoiceCommand("jump_jump", "jump")]
+        public static void Jump() =>
             SLKeys.current.jump.KeyPress();
     }
 }

@@ -1,5 +1,4 @@
 ﻿using WindowsInput;
-using WindowsInput.Native;
 using System.Speech.Synthesis;
 using SLVoiceController.Config;
 
@@ -11,13 +10,13 @@ namespace SLVoiceController.VoiceCommands.Commands
 
         //Using items can be achieved in GunCommands by saying "bang"
 
-        [VoiceCommand("twitter")]
-        public static void CancelUsing(InputSimulator simulator) =>
+        [VoiceCommand("item_cancel", "cancel")]
+        public static void CancelUsing() =>
             SLKeys.current.zoom.KeyPress();
 
 
-        [VoiceCommand("begin the process of zip zaping my medical kit please")]
-        public static void ZipZap(InputSimulator simulator)
+        [VoiceCommand("item_medkitzip_start", "begin the process of zip zaping my medical kit please")]
+        public static void ZipZap()
         {
             EnableZipZap = true;
             new Thread(() =>
@@ -36,15 +35,15 @@ namespace SLVoiceController.VoiceCommands.Commands
         }
 
         [VoiceStop]
-        [VoiceCommand("terminate the process of zip zaping my medical kit please")]
-        public static void DisableZipZap(InputSimulator simulator)
+        [VoiceCommand("item_medkitzip_end", "terminate the process of zip zaping my medical kit please")]
+        public static void DisableZipZap()
         {
             if (!EnableZipZap) return;
             EnableZipZap = false;
             new SpeechSynthesizer().SpeakAsync(new Prompt("Fun successfully disabled"));
         }
 
-        [VoiceCommand("mission commit spectator")]
+        [VoiceCommand("item_detonate", "mission commit spectator")]
         public static void DetonateSelf(InputSimulator simulator)
         {
             new Thread(() =>
@@ -58,8 +57,8 @@ namespace SLVoiceController.VoiceCommands.Commands
             }).Start();
         }
 
-        [VoiceCommand("throw")]
-        public static void Throw(InputSimulator simulator) =>
+        [VoiceCommand("item_throw", "throw")]
+        public static void Throw() =>
             SLKeys.current.throwItem.KeyPress();
     }
 }

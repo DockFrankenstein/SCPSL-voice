@@ -1,13 +1,11 @@
-﻿using WindowsInput;
-using WindowsInput.Native;
-using SLVoiceController.Config;
+﻿using SLVoiceController.Config;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
     public static class InteractionCommands
     {
-        [VoiceCommand("interact")]
-        public static void Interact(InputSimulator simulator) =>
+        [VoiceCommand("interaction_interact", "interact")]
+        public static void Interact() =>
             SLKeys.current.interact.KeyPress();
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Text;
+﻿using Newtonsoft.Json;
 using System.Text.Json;
 
 namespace SLVoiceController.File
@@ -89,21 +89,15 @@ namespace SLVoiceController.File
         #endregion
 
         #region JSON
-        static JsonSerializerOptions jsonSerializerOptions = new JsonSerializerOptions()
-        {
-            IncludeFields = true,
-            WriteIndented = true,
-        };
-
         public static void SaveJSON<T>(string path, T? data)
         {
-            SaveWriter(path, JsonSerializer.Serialize(data, jsonSerializerOptions));
+            SaveWriter(path, JsonConvert.SerializeObject(data, Formatting.Indented));
         }
 
         public static T? LoadJSON<T>(string path)
         {
             string textData = LoadWriter(path);
-            object? data = JsonSerializer.Deserialize<T>(textData, jsonSerializerOptions);
+            object? data = JsonConvert.DeserializeObject<T>(textData);
             if (data == null)
                 throw new Exception($"Couldn't read JSON data from {textData}");
 

@@ -9,7 +9,7 @@ namespace SLVoiceController.Config
     {
         static InputSimulator simulator = new InputSimulator();
 
-        static string KeybindPath =>
+        public static string KeybindPath =>
             $"{AppDomain.CurrentDomain.BaseDirectory}/keybinds.txt";
 
         [Initialize]
@@ -32,11 +32,9 @@ namespace SLVoiceController.Config
             if (ConsoleUtility.DisplayYesNoPrompt("[Key Serializer] No keybinds detected. Do you want to use the default keybinds? [Y / N]"))
             {
                 SaveKeys(SLKeys.current);
-                ConsoleLogger.Log($"[Key Serializer] Saving keybinds in {KeybindPath}");
                 return;
             }
 
-            ConsoleLogger.Log("[Key Serializer] TODO: Keybind config", ConsoleColor.Yellow);
             DisplayBindMenu();
         }
 
@@ -75,6 +73,7 @@ namespace SLVoiceController.Config
         public static void SaveKeys(SLKeys keys)
         {
             FileManager.SaveJSON(KeybindPath, keys);
+            ConsoleLogger.Log($"[Key Serializer] Saving keybinds in {KeybindPath}");
         }
 
         public static void DisplayKeyList()

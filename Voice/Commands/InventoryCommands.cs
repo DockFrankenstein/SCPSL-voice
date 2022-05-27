@@ -1,37 +1,35 @@
-﻿using WindowsInput;
-using WindowsInput.Native;
-using SLVoiceController.Config;
+﻿using SLVoiceController.Config;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
     public static class InventoryCommands
     {
-        [VoiceCommand("pp")]
-        public static void SelectWeapon(InputSimulator simulator) =>
+        [VoiceCommand("inventory_weapon", "weapon")]
+        public static void SelectWeapon() =>
             SLKeys.current.weaponHotkey.KeyPress();
 
-        [VoiceCommand("pp 2")]
-        public static void SelectSecondWeapon(InputSimulator simulator) =>
+        [VoiceCommand("inventory_weapon2", "weapon 2")]
+        public static void SelectSecondWeapon() =>
             SLKeys.current.weaponHotkey2.KeyPress();
 
-        [VoiceCommand("stash")]
-        public static void OpenInventory(InputSimulator simulator) =>
+        [VoiceCommand("inventory_inventory", "inventory")]
+        public static void OpenInventory() =>
             SLKeys.current.inventory.KeyPress();
 
-        [VoiceCommand("keycard")]
-        public static void KeyCard(InputSimulator simulator) =>
+        [VoiceCommand("inventory_keycard", "keycard")]
+        public static void KeyCard() =>
             SLKeys.current.keycardHotkey.KeyPress();
 
-        [VoiceCommand("medicalos")]
-        public static void Medicals(InputSimulator simulator) =>
+        [VoiceCommand("inventory_medical", "medicals")]
+        public static void Medicals() =>
             SLKeys.current.medicalHotkey.KeyPress();
 
-        [VoiceCommand("boom boom")]
-        public static void Grenade(InputSimulator simulator) =>
+        [VoiceCommand("inventory_grenade", "grenade")]
+        public static void Grenade() =>
             SLKeys.current.grenadeHotkey.KeyPress();
 
-        [VoiceCommand("pick up")]
-        public static void Pickup(InputSimulator simulator)
+        [VoiceCommand("inventory_pickup", "pick up")]
+        public static void Pickup()
         {
             new Thread(() =>
             {

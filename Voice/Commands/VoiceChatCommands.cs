@@ -1,6 +1,4 @@
-﻿using WindowsInput;
-using WindowsInput.Native;
-using SLVoiceController.Config;
+﻿using SLVoiceController.Config;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
@@ -9,16 +7,16 @@ namespace SLVoiceController.VoiceCommands.Commands
         private static bool _voiceActive = false;
         private static bool _radioActive = false;
 
-        [VoiceCommand("voice chat")]
-        public static void VoiceChatCommand(InputSimulator simulator) =>
+        [VoiceCommand("voicechat_voice", "voice chat")]
+        public static void VoiceChatCommand() =>
             SLKeys.current.voiceChat.ChangeKeyState(_voiceActive = !_voiceActive);
 
-        [VoiceCommand("radio")]
-        public static void RadioChatCommand(InputSimulator simulator) =>
+        [VoiceCommand("voicechat_alt", "alt chat")]
+        public static void RadioChatCommand() =>
             SLKeys.current.altVoice.ChangeKeyState(_radioActive = !_radioActive);
 
         [VoiceStop]
-        public static void HandleRecognitionStop(InputSimulator simulator)
+        public static void HandleRecognitionStop()
         {
             _voiceActive = false;
             _radioActive = false;
