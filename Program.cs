@@ -4,6 +4,8 @@ using System.Reflection;
 
 using static ConsoleSystem.ConsoleLogger;
 
+Console.Title = "SL voice controller";
+
 ConsoleController.Initialize();
 
 Log("Invoking initialization...", ConsoleColor.Gray);
