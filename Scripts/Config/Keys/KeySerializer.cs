@@ -86,25 +86,42 @@ namespace SLVoiceController.Config
 
         public static void RebindAllKeys()
         {
+            ConsoleLogger.Log("Press RETURN to start rebinding");
+            while (ListenForKey(false) != VirtualKeyCode.RETURN)
+            { }
+
             string[] keyNames = SLKeys.current.GetKeyNames();
             foreach (string keyName in keyNames)
             {
                 Console.Write($"Press any key for {keyName}: ");
-                ListenForKey(keyName, false);
+                RebindKey(keyName, false);
+                Console.WriteLine();
             }
         }
 
         public static void SelectAndRebindKey()
         {
             Console.Write("Key name: ");
-            string? keyName = Console.ReadLine();
+            string? keyName = ConsoleUtility.ReadLineCancel();
+
+            if (keyName == null)
+                return;
 
             Console.Write("Press any key: ");
 
-            ListenForKey(keyName ?? string.Empty);
+            RebindKey(keyName ?? string.Empty);
+
+            Console.WriteLine();
         }
 
-        public static void ListenForKey(string keyName, bool log = true)
+        public static void RebindKey(string keyName, bool log = true)
+        {
+            VirtualKeyCode key = ListenForKey();
+            if (SLKeys.current.RebindKey(keyName, key) && log)
+                ConsoleLogger.Log($"Successfully rebinded key {keyName} to {key}");
+        }
+
+        public static VirtualKeyCode ListenForKey(bool writeKey = true)
         {
             List<VirtualKeyCode> keysToIgnore = new List<VirtualKeyCode>();
 
@@ -121,18 +138,16 @@ namespace SLVoiceController.Config
 
                 foreach (VirtualKeyCode key in Enum.GetValues(typeof(VirtualKeyCode)))
                 {
-                    if (!simulator.InputDeviceState.IsHardwareKeyDown(key) || 
+                    if (!simulator.InputDeviceState.IsHardwareKeyDown(key) ||
                         keysToIgnore.Contains(key)) continue;
 
                     if (Console.KeyAvailable)
                         Console.ReadKey(true);
 
-                    Console.WriteLine(key.ToString());
+                    if (writeKey)
+                        Console.Write(key.ToString());
 
-                    if (SLKeys.current.RebindKey(keyName, key) && log)
-                        ConsoleLogger.Log($"Successfully rebinded key {keyName} to {key}");
-
-                    return;
+                    return key;
                 }
             }
         }

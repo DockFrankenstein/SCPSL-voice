@@ -13,7 +13,7 @@ namespace ConsoleSystem
 
             consoleThread = new Thread(() =>
             {
-                while (true)
+                while (!_isQuitting)
                     HandleInput(GetInput());
             });
 
@@ -21,7 +21,8 @@ namespace ConsoleSystem
             Log("Console has been initialized", ConsoleColor.Blue);
         }
 
-        static Thread consoleThread;
+        static bool _isQuitting;
+        static Thread? consoleThread;
 
         public static void Start()
         {
@@ -46,6 +47,12 @@ namespace ConsoleSystem
             }
 
             command?.Run(args);
+        }
+
+        public static void Exit()
+        {
+            _isQuitting = true;
+            Environment.Exit(0);
         }
     }
 }

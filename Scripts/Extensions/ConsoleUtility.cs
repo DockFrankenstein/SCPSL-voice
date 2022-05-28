@@ -1,4 +1,5 @@
 ﻿using ConsoleSystem;
+using System.Text;
 
 namespace SLVoiceController
 {
@@ -39,6 +40,30 @@ namespace SLVoiceController
             DisplayYesNoPrompt(prompt, wrongPrompt, promptColor, null);
 
         public static bool DisplayYesNoPrompt(string prompt, string? wrongPrompt, ConsoleColor promptColor, ConsoleColor? wrongPromptColor) =>
-            DisplayPrompt(prompt, wrongPrompt, promptColor, null, ConsoleKey.Y, ConsoleKey.N) == ConsoleKey.Y;
+            DisplayPrompt(prompt, wrongPrompt, promptColor, wrongPromptColor, ConsoleKey.Y, ConsoleKey.N) == ConsoleKey.Y;
+
+        public static string? ReadLineCancel()
+        {
+            StringBuilder text = new StringBuilder();
+
+            while (true)
+            {
+                ConsoleKeyInfo key = Console.ReadKey(true);
+                Console.Write(key.KeyChar);
+                text.Append(key.KeyChar);
+
+                if (key.Key == ConsoleKey.Escape)
+                {
+                    Console.WriteLine();
+                    return null;
+                }
+
+                if (key.Key == ConsoleKey.Enter)
+                {
+                    Console.WriteLine();
+                    return text.ToString();
+                }
+            }
+        }
     }
 }

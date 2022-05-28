@@ -9,7 +9,7 @@
         public override void Run(List<string> args)
         {
             Log("Goodbye!");
-            Environment.Exit(0);
+            ConsoleController.Exit();
         }
     }
 }
