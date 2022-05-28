@@ -3,11 +3,16 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
-    <RootNamespace>SCPSL_Voice_controller</RootNamespace>
+    <RootNamespace>SLVoiceController</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AnalysisLevel>none</AnalysisLevel>
+    <ApplicationIcon>Sprites\SLVC logo.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Sprites\SLVC logo.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="..\.editorconfig" Link=".editorconfig" />
@@ -21,10 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="helicopter.wav">
+    <None Update="Sfx\helicopter.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="vine_thud.wav">
+    <None Update="Sfx\vine_thud.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

@@ -7,8 +7,8 @@ namespace SLVoiceController.Audio
 {
     public static class AudioManager
     {
-        public static SoundPlayer vineThud = new SoundPlayer("vine_thud.wav");
-        public static SoundPlayer helicopter = new SoundPlayer("helicopter.wav");
+        public static SoundPlayer vineThud = new SoundPlayer("Sfx/vine_thud.wav");
+        public static SoundPlayer helicopter = new SoundPlayer("Sfx/helicopter.wav");
 
         [Initialize]
         public static void Initialize()
