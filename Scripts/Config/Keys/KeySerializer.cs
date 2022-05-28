@@ -29,7 +29,7 @@ namespace SLVoiceController.Config
 
         static void FirstTimeSetup()
         {
-            if (ConsoleUtility.DisplayYesNoPrompt("[Key Serializer] No keybinds detected. Do you want to use the default keybinds? [Y / N]"))
+            if (ConsoleUtility.DisplayYesNoPrompt("[Key Serializer] No keybinds detected. Do you want to use the default keybinds? [Y/N]"))
             {
                 SaveKeys(SLKeys.current);
                 return;
@@ -42,28 +42,28 @@ namespace SLVoiceController.Config
         {
             while (true)
             {
-                ConsoleKey key = ConsoleUtility.DisplayPrompt("Binding menu:\ndisplay key list: L   " +
-                    "rebind specific key: B   " +
-                    "rebind all keys: F   " +
-                    "exit: E", 
-                    ConsoleKey.L, ConsoleKey.B, ConsoleKey.F, ConsoleKey.E);
+                ConsoleKey key = ConsoleUtility.DisplayPrompt("Binding menu:\ndisplay key list: 1   " +
+                    "rebind specific key: 2   " +
+                    "rebind all keys: 3   " +
+                    "exit: 4", false, 
+                    ConsoleKey.D1, ConsoleKey.D2, ConsoleKey.D3, ConsoleKey.D4);
 
                 switch (key)
                 {
                     //Display key list
-                    case ConsoleKey.L:
+                    case ConsoleKey.D1:
                         DisplayKeyList();
                         break;
                     //Rebind specific key
-                    case ConsoleKey.B:
+                    case ConsoleKey.D2:
                         SelectAndRebindKey();
                         break;
                     //Rebind all keys
-                    case ConsoleKey.F:
+                    case ConsoleKey.D3:
                         RebindAllKeys();
                         break;
                     //Exit
-                    case ConsoleKey.E:
+                    case ConsoleKey.D4:
                         SaveKeys(SLKeys.current);
                         return;
                 }

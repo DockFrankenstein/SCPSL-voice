@@ -5,6 +5,16 @@ namespace SLVoiceController
 {
     public static class ConsoleUtility
     {
+        #region Prompt
+        public static ConsoleKey DisplayPrompt(string prompt, bool displayKey, params ConsoleKey[] keys) =>
+            DisplayPrompt(prompt, null, ConsoleColor.White, null, displayKey, keys);
+
+        public static ConsoleKey DisplayPrompt(string prompt, bool displayKey, ConsoleColor promptColor, params ConsoleKey[] keys) =>
+            DisplayPrompt(prompt, null, promptColor, null, displayKey, keys);
+
+        public static ConsoleKey DisplayPrompt(string prompt, bool displayKey, string? wrongPrompt, ConsoleColor promptColor, params ConsoleKey[] keys) =>
+            DisplayPrompt(prompt, wrongPrompt, promptColor, null, displayKey, keys);
+
         public static ConsoleKey DisplayPrompt(string prompt, params ConsoleKey[] keys) =>
             DisplayPrompt(prompt, null, ConsoleColor.White, null, keys);
 
@@ -14,14 +24,19 @@ namespace SLVoiceController
         public static ConsoleKey DisplayPrompt(string prompt, string? wrongPrompt, ConsoleColor promptColor, params ConsoleKey[] keys) =>
             DisplayPrompt(prompt, wrongPrompt, promptColor, null, keys);
 
-        public static ConsoleKey DisplayPrompt(string prompt, string? wrongPrompt, ConsoleColor promptColor, ConsoleColor? wrongPromptColor, params ConsoleKey[] keys)
+        public static ConsoleKey DisplayPrompt(string prompt, string? wrongPrompt, ConsoleColor promptColor, ConsoleColor? wrongPromptColor, params ConsoleKey[] keys) =>
+            DisplayPrompt(prompt, wrongPrompt, promptColor, wrongPromptColor, true, keys);
+
+        public static ConsoleKey DisplayPrompt(string prompt, string? wrongPrompt, ConsoleColor promptColor, ConsoleColor? wrongPromptColor, bool displayKey, params ConsoleKey[] keys)
         {
             ConsoleLogger.Log(prompt, promptColor);
 
             while (true)
             {
-                ConsoleKey key = Console.ReadKey().Key;
-                Console.WriteLine();
+                ConsoleKey key = Console.ReadKey(!displayKey).Key;
+
+                if (displayKey)
+                    Console.WriteLine();
 
                 if (Array.IndexOf(keys, key) != -1)
                     return key;
@@ -29,7 +44,9 @@ namespace SLVoiceController
                 ConsoleLogger.Log(wrongPrompt ?? prompt, wrongPromptColor ?? promptColor);
             }
         }
+        #endregion
 
+        #region YesNoPrompt
         public static bool DisplayYesNoPrompt(string prompt) =>
             DisplayYesNoPrompt(prompt, null, ConsoleColor.White, null);
 
@@ -41,6 +58,7 @@ namespace SLVoiceController
 
         public static bool DisplayYesNoPrompt(string prompt, string? wrongPrompt, ConsoleColor promptColor, ConsoleColor? wrongPromptColor) =>
             DisplayPrompt(prompt, wrongPrompt, promptColor, wrongPromptColor, ConsoleKey.Y, ConsoleKey.N) == ConsoleKey.Y;
+        #endregion
 
         public static string? ReadLineCancel()
         {
