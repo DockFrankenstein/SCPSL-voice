@@ -1,6 +1,9 @@
 ﻿using WindowsInput;
 using System.Speech.Synthesis;
 using SLVoiceController.Config;
+using System.Diagnostics;
+using WindowsInput.Native;
+using System.Management;
 
 namespace SLVoiceController.VoiceCommands.Commands
 {
@@ -48,12 +51,44 @@ namespace SLVoiceController.VoiceCommands.Commands
         {
             new Thread(() =>
             {
+                SLKeys.current.shoot.KeyUp();
+                SLKeys.current.zoom.KeyUp();
                 SLKeys.current.grenadeHotkey.KeyPress();
-                simulator.Mouse.MoveMouseBy(0, 4000);
 
                 new SpeechSynthesizer().SpeakAsync(new Prompt("Commencing ultimate bye bye"));
                 Thread.Sleep(200);
                 SLKeys.current.shoot.KeyPress();
+                Thread.Sleep(1200);
+                simulator.Mouse.MoveMouseBy(0, ApplicationData.Height);
+            }).Start();
+
+            new Thread(() =>
+            {
+                VirtualKeyCode forward = SLKeys.current.forward;
+                VirtualKeyCode backward = SLKeys.current.backward;
+                VirtualKeyCode left = SLKeys.current.left;
+                VirtualKeyCode right = SLKeys.current.right;
+
+                Stopwatch s = new Stopwatch();
+                s.Start();
+
+                while (s.Elapsed < TimeSpan.FromSeconds(10.2))
+                {
+                    GoBackToPosition(forward, backward);
+                    GoBackToPosition(right, left);
+                    Thread.Sleep(10);
+                }
+
+                forward.KeyUp();
+                backward.KeyUp();
+                left.KeyUp();
+                right.KeyUp();
+
+                void GoBackToPosition(VirtualKeyCode positive, VirtualKeyCode negative)
+                {
+                    positive.ChangeKeyState(negative.IsKeyDown());
+                    negative.ChangeKeyState(positive.IsKeyDown());
+                }
             }).Start();
         }
 

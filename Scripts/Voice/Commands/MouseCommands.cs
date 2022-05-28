@@ -8,7 +8,7 @@ namespace SLVoiceController.VoiceCommands.Commands
         public const int MoveAmmount = 600;
         public const int SmallMoveAmmount = 100;
 
-        public const int MouseMoveInterval = 20;
+        public const int MouseMoveInterval = 10;
         public const int MouseSpeed = 600;
 
         static bool allowRotating = true;

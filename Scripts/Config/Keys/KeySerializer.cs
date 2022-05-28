@@ -87,8 +87,17 @@ namespace SLVoiceController.Config
         public static void RebindAllKeys()
         {
             ConsoleLogger.Log("Press RETURN to start rebinding");
-            while (ListenForKey(false) != VirtualKeyCode.RETURN)
-            { }
+            while (true)
+            {
+                VirtualKeyCode? key = ListenForKey(false, true);
+
+                if (key == null)
+                    return;
+
+                if (key == VirtualKeyCode.RETURN)
+                    break;
+            }
+
 
             string[] keyNames = SLKeys.current.GetKeyNames();
             foreach (string keyName in keyNames)
@@ -109,19 +118,18 @@ namespace SLVoiceController.Config
 
             Console.Write("Press any key: ");
 
-            RebindKey(keyName ?? string.Empty);
-
-            Console.WriteLine();
+            RebindKey(keyName);
         }
 
         public static void RebindKey(string keyName, bool log = true)
         {
-            VirtualKeyCode key = ListenForKey();
-            if (SLKeys.current.RebindKey(keyName, key) && log)
+            VirtualKeyCode? key = ListenForKey();
+            Console.WriteLine();
+            if (SLKeys.current.RebindKey(keyName, key ?? default) && log)
                 ConsoleLogger.Log($"Successfully rebinded key {keyName} to {key}");
         }
 
-        public static VirtualKeyCode ListenForKey(bool writeKey = true)
+        public static VirtualKeyCode? ListenForKey(bool writeKey = true, bool cancellable = false)
         {
             List<VirtualKeyCode> keysToIgnore = new List<VirtualKeyCode>();
 
@@ -136,13 +144,14 @@ namespace SLVoiceController.Config
                     if (simulator.InputDeviceState.IsHardwareKeyUp(key))
                         keysToIgnore.Remove(key);
 
+                if (Console.KeyAvailable && Console.ReadKey(true).Key == ConsoleKey.Escape && cancellable)
+                    return null;
+
                 foreach (VirtualKeyCode key in Enum.GetValues(typeof(VirtualKeyCode)))
                 {
+
                     if (!simulator.InputDeviceState.IsHardwareKeyDown(key) ||
                         keysToIgnore.Contains(key)) continue;
-
-                    if (Console.KeyAvailable)
-                        Console.ReadKey(true);
 
                     if (writeKey)
                         Console.Write(key.ToString());

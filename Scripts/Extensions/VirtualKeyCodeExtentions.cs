@@ -7,23 +7,60 @@ namespace SLVoiceController
     static class VirtualKeyCodeExtentions
     {
         static InputSimulator simulator =>
-            VoiceCommands.VoiceCommandController.Simulator;
+            VoiceCommandController.Simulator;
 
         public static VirtualKeyCode KeyPress(this VirtualKeyCode key)
         {
+            switch (key)
+            {
+                case VirtualKeyCode.RBUTTON:
+                    simulator.Mouse.RightButtonClick();
+                    break;
+                case VirtualKeyCode.LBUTTON:
+                    simulator.Mouse.LeftButtonClick();
+                    break;
+                default:
+                    simulator.Keyboard.KeyPress(key);
+                    break;
+            }
+
             simulator.Keyboard.KeyPress(key);
             return key;
         }
 
         public static VirtualKeyCode KeyDown(this VirtualKeyCode key)
         {
-            simulator.Keyboard.KeyDown(key);
+            switch (key)
+            {
+                case VirtualKeyCode.RBUTTON:
+                    simulator.Mouse.RightButtonDown();
+                    break;
+                case VirtualKeyCode.LBUTTON:
+                    simulator.Mouse.LeftButtonDown();
+                    break;
+                default:
+                    simulator.Keyboard.KeyDown(key);
+                    break;
+            }
+
             return key;
         }
 
         public static VirtualKeyCode KeyUp(this VirtualKeyCode key)
         {
-            simulator.Keyboard.KeyUp(key);
+            switch (key)
+            {
+                case VirtualKeyCode.RBUTTON:
+                    simulator.Mouse.RightButtonUp();
+                    break;
+                case VirtualKeyCode.LBUTTON:
+                    simulator.Mouse.LeftButtonUp();
+                    break;
+                default:
+                    simulator.Keyboard.KeyUp(key);
+                    break;
+            }
+
             return key;
         }
 

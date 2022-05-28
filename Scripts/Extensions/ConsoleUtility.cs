@@ -62,26 +62,11 @@ namespace SLVoiceController
 
         public static string? ReadLineCancel()
         {
-            StringBuilder text = new StringBuilder();
+            string? input = Console.ReadLine();
+            if (input == "CANCEL")
+                input = null;
 
-            while (true)
-            {
-                ConsoleKeyInfo key = Console.ReadKey(true);
-                Console.Write(key.KeyChar);
-                text.Append(key.KeyChar);
-
-                if (key.Key == ConsoleKey.Escape)
-                {
-                    Console.WriteLine();
-                    return null;
-                }
-
-                if (key.Key == ConsoleKey.Enter)
-                {
-                    Console.WriteLine();
-                    return text.ToString();
-                }
-            }
+            return input;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace SLVoiceController.VoiceCommands.Commands
         [VoiceCommand("gun_shoot", "bang")]
         public static void ShootOneShot()
         {
-            SLKeys.current.zoom.KeyPress();
+            SLKeys.current.shoot.KeyPress();
         }
 
         [VoiceCommand("gun_shootall", "shoot auto")]
@@ -22,8 +22,7 @@ namespace SLVoiceController.VoiceCommands.Commands
         [VoiceCommand("gun_zoom", "zoom")]
         public static void Zoom()
         {
-            Zoomed = !Zoomed;
-            SLKeys.current.shoot.ChangeKeyState(Zoomed = !Zoomed);
+            SLKeys.current.zoom.ChangeKeyState(Zoomed = !Zoomed);
         }
 
         [VoiceStop]

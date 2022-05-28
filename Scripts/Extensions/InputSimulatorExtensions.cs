@@ -11,10 +11,10 @@ namespace SLVoiceController.VoiceCommands
             switch (isDown)
             {
                 case true:
-                    simulator.Keyboard.KeyUp(key);
+                    key.KeyUp();
                     break;
                 case false:
-                    simulator.Keyboard.KeyDown(key);
+                    key.KeyDown();
                     break;
             }
         }
