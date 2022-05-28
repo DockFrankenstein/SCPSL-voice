@@ -1,7 +1,10 @@
 # Table of contents
 * [Overview](#overview)
 * [Setup](#setup)
+* [Usage](#usage)
 * [Rebinding buttoms](#rebinding-buttons)
+* [Changing commands](#changing-commands)
+* [FAQ](#faq)
 * [Known issues](#known-issues)
 * [Possible upcoming features](#possible-upcoming-features)
 
