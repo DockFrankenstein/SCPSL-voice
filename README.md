@@ -1,4 +1,4 @@
-![SLVC banner](https://github.com/DockFrankenstein/SCPSL-voice/tree/main/.github/Images/SLVC%20banner.png)
+![SLVC banner](https://github.com/DockFrankenstein/SCPSL-voice/blob/main/.github/Images/SLVC%20banner.png)
 
 # Table of contents
 * [Overview](#overview)
