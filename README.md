@@ -1,5 +1,8 @@
 ![SLVC banner](https://github.com/DockFrankenstein/SCPSL-voice/blob/main/.github/Images/SLVC%20banner.png)
 
+![Downloads](https://img.shields.io/github/downloads/DockFrankenstein/SCPSL-voice/total?color=%23&label=Downloads&style=flat-square)
+![License](https://img.shields.io/github/license/DockFrankenstein/SCPSL-voice?style=flat-square)
+
 # Table of contents
 * [Overview](#overview)
 * [Setup](#setup)
