@@ -19,6 +19,8 @@ This application allows you to control SCP: Secret Laboratory using voice comman
 
 # Setup
 
+Video tutorial: https://youtu.be/9U8PycDEioo
+
 Download the newest avaliable version [here](/releases) and unpack it. After launching, the app will begin the setup process.
 
 When launching for the first time, the app will say: `[Key Serializer] No keybinds detected. Do you want to use the default keybinds?`. If you are using the default keybinds in SL you can press `Y`. If not, press `N` to rebind. You can do this later by executing command `binds_menu`. More about rebinding [here](#rebinding-buttons).
